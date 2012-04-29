@@ -1,2 +1,13 @@
-h1= title
-p Welcome to #{title}
+script(src="/javascripts/view.index.js")
+
+.hero-unit
+  h1 Sistema de control de perifericos
+  p Sistema dedicado a llevar un estricto control sobre el equipamiento informatico de tus clientes. Lleva actualizada informacion de computadores,impresoras y otros perifericos.
+  p
+    a.btn.btn-primary.btn-large(href='#') Mas informacion
+
+#left-column.column
+  h2 Usuarios
+    ul#usuarios
+      each u in usuarios
+        li #{u}

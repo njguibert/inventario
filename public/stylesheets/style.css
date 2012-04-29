@@ -1,8 +1,12 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  heigh:1000px;
 }
 
 a {
   color: #00B7FF;
 }
+#map_canvas { height: 400px;width:600px; }
+#devicelist {background-color:white;border-radius: 6px 6px 6px 6px;height:200px}
+#contenido{background-color: #EEEEEE;border-radius: 6px 6px 6px 6px;margin-bottom: 30px;padding: 30px;height:400px}

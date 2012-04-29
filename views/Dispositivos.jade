@@ -1,0 +1,40 @@
+script(src="/javascripts/dispositivos.coffee",type="text/coffeescript")
+#contenido
+  h1 Area Dispositivos
+  br
+  .modal.fade(id='newdispositivo')
+     .modal-header
+       a.close(data-dismiss='modal') x
+       h3 Nuevo Dispositivo - Datos
+     .modal-body(style='height:200px')
+       input.input-small(placeholder='Nombre',id='nombre')
+       input.input-small(placeholder='Descripcion',id='descripcion')
+       label 
+       a.btn(href='#',data-toggle='dropdown',id='newcaracteristica') New Plus          
+       #plusform(style='display:none')
+         label Nuevo Plus
+         input.input-small(placeholder='Dato',id='dato')
+         input.input-small(placeholder='Valor',id='valor')
+         a.btn(id='newplus') Add       
+       #pluslist
+     .modal-footer
+       a.btn(href='#') Cacelar
+       a.btn.btn-primary(href='#',id='agregar') Guardar
+  a.btn(href='#newdispositivo', data-toggle='modal') Nuevo Dispositivo
+  #coleccionedit
+    .span10
+      .row
+      .span5
+        label(style='padding-top:10px') Dispositivos no confirmados
+        #devicelist
+        .row.offset2
+          a.btn.btn-inverse(href='#',id='guardarenservidor') Cancelar
+          a.btn.btn-primary(href='#',id='guardarenservidor') Guardar 
+      .span4
+        h1 Modificar Dispositivo
+  #productosABC
+    .span10
+
+
+
+

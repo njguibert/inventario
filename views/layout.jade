@@ -1,7 +1,19 @@
 doctype 5
 html
   head
-    title= title
+    title Sistema de Control
+    script(src="/javascripts/jquery-1.7.2.min.js")
+    script(src="/javascripts/json2.js")
+    script(src="/javascripts/underscore-min.js")
+    script(src="/javascripts/backbone-min.js")
+    script(src="/javascripts/backbone-relational-0.5.0.js")
+    script(src="/javascripts/bootstrap-dropdown.js")
+    script(src="/javascripts/bootstrap-transition.js")
+    script(src="/javascripts/bootstrap-modal.js")
+    script(src="/javascripts/bootstrap-tooltip.js")
+    script(src="/javascripts/bootstrap-popover.js")
+    script(src="/javascripts/coffee-script.js")
+    script(src="/javascripts/layout.coffee",type="text/coffeescript")
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.min.css')    
@@ -9,19 +21,43 @@ html
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          a.brand(href='#') Inventario v0.1
+          a.brand(href='/') Inventario
           ul.nav
             li.active
-              a(href='#') Home
+              a(href='/home') Home
             li.active
               a(href='#') Sobre Mi
             li.active
-              a(href='#') Contacto
+              a(href='#',id='l') Contacto
+          ul.nav
+            li.divider-vertical
 
+          ul.nav.pull-right
+            if session.user == null
+              li.active.navbar-form(id='frmlogin')
+                input.input-small(placeholder='Email',id='email',value='njguibert@gmail.com') 
+                input.input-small(placeholder='Password',type='password',id='password',value='guibert')
+                button.btn(id='login') Login
+            else
+              li.dropdown(id='menu1')
+                a.dropdown-toggle(href='#',data-toggle='dropdown') Cuenta
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a(href='#',id="logout") Salir
     .container-fluid
-      .hero-unit
-        h1 Sistema de control de perifericos
-        p Sistema dedicado a llevar un estricto control sobre el equipamiento informatico de tus clientes. Lleva actualizada informacion de computadores,impresoras y otros perifericos.
-        p
-          a.btn.btn-primary.btn-large(href='#') Mas informacion
+      if session.user == null
+        #content!= body
+      else
+        .span2
+          //Aca va el SideBar
+          #sidebar
+          h1 SideBar
+          ul#opciones
+            each o in opciones
+              li
+                a.btn(href='/getview/#{o.nombre}') #{o.nombre}
+        .span10
+          //Aca va el contenido dinamico
+          #content!= body
 

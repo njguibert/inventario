@@ -1,0 +1,22 @@
+script(src="/javascripts/clientes.coffee",type="text/coffeescript")
+#contenido
+  h1 Area Clientes
+  br
+  .span10
+    .modal.fade(id='frmnuevocliente')
+      .modal-header
+        a.close(data-dismiss='modal') x
+        h3 Nuevo Cliente - Datos
+      .modal-body
+        input.input-small(placeholder='Nombre',id='nombre')
+        input.input-small(placeholder='Telefono',id='tel')
+        input.input-small(placeholder='Direccion',id='dir')
+      .modal-footer
+        a.btn(href='#') Cacelar
+        a.btn.btn-primary(href='#',id='agregar') Guardar
+
+    a.btn(href='#frmnuevocliente', data-toggle='modal') Nuevo Cliente
+    label(style='padding-top:10px') Tus Clientes:
+    #listclientes
+
+
