@@ -10,20 +10,19 @@ $ ->
     model: Caracteristica
     initialize: ->
       #alert "Se creo una coleccion de caracteristicas"
+      #this.bind('add', (c) ->
+      #  vistacaracteristicas.render(c)  # Renderizo la nueva caracteristica
+      #)
 
   class DispositivoCollection extends Backbone.Collection
     model: Dispositivo
-    url: -> '/colecciones/guardardispositivos/'
-    save: -> #<-----------------------------------------Metodo Para Guardar la coleccion de dispositivos
-      response = Backbone.sync('create', @, url: @url(), contentType: 'application/json', data: JSON.stringify(Dispositivos))
-      #response.done (models) => @reset models.children
-      return response
     initialize: ->
       #alert "Se creo una coleccion de dispositivos"
       this.bind('add', (c) ->
         vistadispositivos.render(c)
         alert "Producto Agregado"
       )
+
 
   class Dispositivo extends Backbone.RelationalModel
     initialize: ->
@@ -52,6 +51,8 @@ $ ->
     vaciar: ->
       $("#pluslist").empty()
 
+
+
   class VistaDispositivos extends Backbone.View
     el: "#devicelist"
     render: (data) ->
@@ -76,6 +77,8 @@ $ ->
     vistacaracteristicas.vaciar()
     $('#plusform').toggle()
 
+
+
   $('#newplus').click ->
     caracteristica=new Caracteristica
       dato:$('#dato').val()
@@ -87,11 +90,6 @@ $ ->
 
   $('#newcaracteristica').click ->
    $('#plusform').toggle()
-
-  $('#guardarenservidor').click ->
-    Dispositivos.save (data) ->
-        alert "respuesta el ajax"
-
 
   #c1= new Caracteristica({id:101,dato:'Socket',valor:'775'})
   #c2= new Caracteristica({id:102,dato:'Velocidad BUS',valor:'1066Mhz'})

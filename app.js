@@ -50,6 +50,7 @@ app.post('/getmodels/:modelname',routes.getmodels);
 app.post('/login/',routes.login);
 app.post('/logout/',routes.logout);
 app.post('/cliente/new',routes.clientenew);
+app.post('/colecciones/guardardispositivos/',routes.guardardispositivos);
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });

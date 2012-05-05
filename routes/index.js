@@ -20,12 +20,25 @@ var Usuario = sequelize.define('usuario',{
 				mail: Sequelize.STRING,
 				psw: Sequelize.STRING,
 			})
+var Dispositivo = sequelize.define('dispositivo',{
+				nombre: Sequelize.STRING,
+				descripcion: Sequelize.STRING,
+			})
+var Caracteristica = sequelize.define('caracteristica',{
+				dato: Sequelize.STRING,
+				valor: Sequelize.STRING,
+			})
 //Cliente.hasOne(Usuario,{as:'tecnico'});
 Usuario.hasMany(Cliente,{as:'clientes'});
+Dispositivo.hasMany(Caracteristica,{as:'caracteristicas'})
+//Caracteristica.sync();
+Dispositivo.sync();
+//Caracteristica.create();
+//Dispositivo.create();
 Cliente.sync();
 Usuario.sync();
-Cliente.create();
-Usuario.create();
+//Cliente.create();
+//Usuario.create();
 
 console.log("Finalize la creacion del modelo");
 
@@ -92,6 +105,59 @@ exports.logout = function  (req,res) {
 	var estado=true;
 	res.json(estado);
 	};
+
+exports.guardardispositivos= function (req,res){
+	//Obtengo la coleccion a guardar
+	coleccion= req.body;
+	//console.log("coleccino:"+coleccion.length);
+	tamanocoleccion=coleccion.length;
+	var contador=1;
+	//console.log ("tamanocoleecion:" + tamanocoleccion)
+	//console.log ("tamanocontador:" + contador)
+	for (d in coleccion){
+		console.log("\ndispositivo:" + d);
+		//Datos del Producto
+		var estado=false;
+		var pnombre=coleccion[d].nombre;
+		var	pdescripcion=coleccion[d].descripcion;
+		var pcaracteristicas=[];
+		pcaracteristicas=coleccion[d].caracteristicas[0];
+		//console.log("\nCaracteristicas:" + caracteristicas);
+		//Creo un nuevo dispositivo con los datos del producto
+		nuevodispositivo= Dispositivo.build({
+			nombre:pnombre,
+			descripcion:pdescripcion,
+		});
+		 //Persisto el dispositivo en la BD
+		/*nuevodispositivo.save().success(function(){
+						  		console.log("Nueva dispositivo agregado correctamente:");							  		
+						  	}).error(function(){
+								console.log("Error en la accion: Nuevo dispositivo");
+						  	}.on('success'),function(gg){
+						  		console.log("evento:" + gg.nombre);
+						  	});	*/
+		nuevodispositivo.save().on('success',function (gg){
+						  		estado=true;
+								//Recorro las caracteristicas de un producto
+								  for (c in pcaracteristicas){
+								  	//Datos de una caracteristica
+								  	var cdato=pcaracteristicas[c].dato;
+								  	var cvalor=pcaracteristicas[c].valor;
+								  	//Creo una nueva caracteristicas con los datos anteriores
+								  	nuevacaracteristica=Caracteristica.build({
+								  		dato:cdato,
+								  		valor:cvalor,
+								  	});
+								  	console.log("\nCaracteristica:" + nuevacaracteristica.dato);
+								  	console.log("\nDispositivo2:" + gg.nombre);
+								  	gg.addCaracteristica(nuevacaracteristica);
+
+								  }
+
+		});  
+	
+	}
+};
 exports.getmodels = function (req,res){
 	//Obtengo el modelo a listar
 	modelname=req.params.modelname;
